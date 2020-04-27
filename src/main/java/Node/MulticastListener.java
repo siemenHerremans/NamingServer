@@ -22,7 +22,7 @@ public class MulticastListener implements Runnable {
     public void run() {
 
         while(isRunning) {
-
+            System.out.println("Multicast Listener running");
             try {
                 InetAddress group = InetAddress.getByName(groupAddress);
                 MulticastSocket s = new MulticastSocket(port);
@@ -44,7 +44,7 @@ public class MulticastListener implements Runnable {
                 String[] data = input.split("%");
 
 
-                currentNode.process(data[1], data[2]);
+                currentNode.process(data[0], data[1]);
 
                 System.out.println("ip: " + data[0] + " name: " + data[1]);
 

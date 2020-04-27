@@ -23,8 +23,6 @@ public class Node {
         this.port = socket;
         this.setHost();
         this.currentID = hash(name);
-//        this.nextID = currentID;
-//        this.previousID = currentID;
     }
 
     public void setHost() {
@@ -45,19 +43,29 @@ public class Node {
     }
 
     public void bootstrap() {
-        sendMsg(getHost());
+        sendMulti(getHost());
     }
 
     public void process(String ip, String name) {
+
+        if (calcIDs(name))
+            sendUni(this.name, ip);
+
+        System.out.println("nextID " + nextID + " previousID " + previousID);
+    }
+
+    private boolean calcIDs(String name){
         int nodeHash = hash(name);
+        boolean state = false;
 
         if (currentID < nodeHash && nodeHash < nextID) {
             nextID = nodeHash;
-            sendUni(this.name, ip);
+            state = true;
         } else if (currentID > nodeHash && nodeHash > previousID) {
             previousID = nodeHash;
-            sendUni(this.name, ip);
+            state = true;
         }
+        return state;
     }
 
     private boolean sendUni(String msg, String ip) {
@@ -76,7 +84,7 @@ public class Node {
 
     }
 
-    private boolean sendMsg(String msg) {
+    private boolean sendMulti(String msg) {
         try {
             // join multicast group
             InetAddress group = InetAddress.getByName(groupAddress);
