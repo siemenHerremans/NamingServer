@@ -3,6 +3,7 @@ package Node;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.security.MessageDigest;
@@ -11,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 public class Node {
 
     private String groupAddress;
-    private int socket;
+    private int port;
     private String IP;
     private String name;
 
@@ -19,7 +20,7 @@ public class Node {
 
     public Node(String groupAddress, int socket) {
         this.groupAddress = groupAddress;
-        this.socket = socket;
+        this.port = socket;
         this.setHost();
         this.currentID = hash(name);
 //        this.nextID = currentID;
@@ -43,40 +44,47 @@ public class Node {
         return IP + "%" + name;
     }
 
-    public void bootstrap(){
+    public void bootstrap() {
         sendMsg(getHost());
     }
 
-    public void process(String ip, String name){
+    public void process(String ip, String name) {
         int nodeHash = hash(name);
 
-        if(currentID < nodeHash && nodeHash < nextID){
+        if (currentID < nodeHash && nodeHash < nextID) {
             nextID = nodeHash;
             sendUni(this.name, ip);
-        }else if(currentID > nodeHash && nodeHash > previousID){
+        } else if (currentID > nodeHash && nodeHash > previousID) {
             previousID = nodeHash;
             sendUni(this.name, ip);
         }
     }
 
-    private void sendUni(String msg, String ip){
-//        try{
-//            return true;
-//        } catch (IOException e){
-//            e.printStackTrace();
-//            return false;
-//        }
+    private boolean sendUni(String msg, String ip) {
+        try {
+            DatagramSocket ds = new DatagramSocket();
+
+            InetAddress ipDest = InetAddress.getByName(ip);
+            DatagramPacket dp = new DatagramPacket(msg.getBytes(), msg.length(), ipDest, port);
+            ds.send(dp);
+            ds.close();
+            return true;
+        }catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     private boolean sendMsg(String msg) {
         try {
             // join multicast group
             InetAddress group = InetAddress.getByName(groupAddress);
-            MulticastSocket s = new MulticastSocket(socket);
+            MulticastSocket s = new MulticastSocket(port);
             s.joinGroup(group);
 
             // build packet and multicast send it
-            DatagramPacket packet = new DatagramPacket(msg.getBytes(), msg.length(), group, socket);
+            DatagramPacket packet = new DatagramPacket(msg.getBytes(), msg.length(), group, port);
             s.send(packet);
 
             // leave group
