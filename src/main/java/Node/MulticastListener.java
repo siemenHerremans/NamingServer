@@ -11,14 +11,15 @@ import java.security.NoSuchAlgorithmException;
 public class MulticastListener implements Runnable {
 
     private String groupAddress;
-    private String name;
     private int port;
     private int hashVal = 0;
     private boolean isRunning = true;
+    private Node currentNode;
 
-    public MulticastListener(String groupAddress, int port) {
+    public MulticastListener(String groupAddress, int port, Node node) {
         this.groupAddress = groupAddress;
         this.port = port;
+        currentNode = node;
     }
 
     @Override
@@ -35,7 +36,6 @@ public class MulticastListener implements Runnable {
                 DatagramPacket recv = new DatagramPacket(buf, buf.length);
 
                 s.receive(recv);
-                //System.out.println("Recieving");
                 s.leaveGroup(group);
 
                 byte b;

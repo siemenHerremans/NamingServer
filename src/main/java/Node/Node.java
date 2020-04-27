@@ -42,8 +42,7 @@ public class Node {
     private boolean sendMsg(String msg) {
         try {
             // join multicast group
-            InetAddress group = null;
-            group = InetAddress.getByName(groupAddress);
+            InetAddress group = InetAddress.getByName(groupAddress);
             MulticastSocket s = new MulticastSocket(socket);
             s.joinGroup(group);
 
