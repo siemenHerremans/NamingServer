@@ -1,13 +1,10 @@
 package NamingServer;
 
-import Node.Node;
-
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.TreeMap;
@@ -40,8 +37,8 @@ public class NamingServer {
     }
 
     public void addNode(String name, String ip) throws Exception {
-        int hashVal = hash(name);
-        NodeMap.put(hashVal, ip);
+        hashLast = hash(name);
+        NodeMap.put(hashLast, ip);
         udpNumberOfNodes();
     }
 
