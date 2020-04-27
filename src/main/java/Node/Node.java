@@ -46,6 +46,10 @@ public class Node {
         sendMulti(getHost());
     }
 
+    public void testUni(String msg){
+        sendUni(msg, IP);
+    }
+
     public void process(String ip, String name) {
 
         if (calcIDs(name))
@@ -54,7 +58,7 @@ public class Node {
         System.out.println("nextID " + nextID + " previousID " + previousID);
     }
 
-    private boolean calcIDs(String name){
+    private boolean calcIDs(String name) {
         int nodeHash = hash(name);
         boolean state = false;
 
@@ -73,11 +77,11 @@ public class Node {
             DatagramSocket ds = new DatagramSocket();
 
             InetAddress ipDest = InetAddress.getByName(ip);
-            DatagramPacket dp = new DatagramPacket(msg.getBytes(), msg.length(), ipDest, port);
+            DatagramPacket dp = new DatagramPacket(msg.getBytes(), msg.length(), ipDest, 7890);
             ds.send(dp);
             ds.close();
             return true;
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
