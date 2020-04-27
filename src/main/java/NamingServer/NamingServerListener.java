@@ -46,7 +46,7 @@ public class NamingServerListener implements Runnable {
 
                 System.out.println("ip: " + data[0] + " name: " + data[1]+" hash: " + hashVal);
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 isRunning = false;
             }
