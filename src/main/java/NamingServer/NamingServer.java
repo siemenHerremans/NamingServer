@@ -16,7 +16,6 @@ public class NamingServer {
     private int port;
     private String ip;
     private String name;
-    private int hashLast;
 
     public NamingServer(String address, int port) {
         this.groupAddress = address;
@@ -37,15 +36,15 @@ public class NamingServer {
     }
 
     public void addNode(String name, String ip) throws Exception {
-        hashLast = hash(name);
-        NodeMap.put(hashLast, ip);
-        udpNumberOfNodes();
+        int hash = hash(name);
+        NodeMap.put(hash, ip);
+        udpNumberOfNodes(hash);
     }
 
-    public void udpNumberOfNodes() throws Exception {
+    public void udpNumberOfNodes(int hash) throws Exception {
         DatagramSocket ds = new DatagramSocket();
         String str = Integer.toString(NodeMap.size());
-        InetAddress ipDest = InetAddress.getByName(NodeMap.get(hashLast));
+        InetAddress ipDest = InetAddress.getByName(NodeMap.get(hash));
         DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ipDest, port);
         ds.send(dp);
         ds.close();
