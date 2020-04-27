@@ -1,5 +1,7 @@
 package NamingServer;
 
+import Node.MulticastListener;
+
 import java.awt.*;
 
 public class Main {
@@ -8,8 +10,11 @@ public class Main {
         System.out.println("----Namingserver----");
 
         String address = "228.5.6.7";
-        int socket = 6789;
+        int port = 6789;
 
-        NamingServer namingserver = new NamingServer(address, socket);
+        NamingServer namingserver = new NamingServer(address, port);
+
+        NamingServerListener listener = new NamingServerListener(address, port, namingserver);
+        new Thread(listener).start();
     }
 }
