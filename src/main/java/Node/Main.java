@@ -6,10 +6,8 @@ public class Main {
 
         String address = "228.5.6.7";
         int socket = 6789;
-        Thread networkmanager = new Thread(new NetworkManager(address, socket));
         Node node = new Node(address, socket);
-        
-        networkmanager.start();
+
         node.bootstrap();
     }
 }
