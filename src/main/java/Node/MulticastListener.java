@@ -14,6 +14,7 @@ public class MulticastListener implements Runnable {
     private String name;
     private int port;
     private int hashVal = 0;
+    private boolean isRunning = true;
 
     public MulticastListener(String groupAddress, int port) {
         this.groupAddress = groupAddress;
@@ -23,39 +24,48 @@ public class MulticastListener implements Runnable {
     @Override
     public void run() {
 
-        try {
-            InetAddress group = InetAddress.getByName(groupAddress);
-            MulticastSocket s = new MulticastSocket(port);
-            s.joinGroup(group);
+        while(isRunning) {
 
-            byte[] buf = new byte[1000];
-            DatagramPacket recv = new DatagramPacket(buf, buf.length);
+            try {
+                InetAddress group = InetAddress.getByName(groupAddress);
+                MulticastSocket s = new MulticastSocket(port);
+                s.joinGroup(group);
 
-            s.receive(recv);
-            System.out.println("Recieving");
+                byte[] buf = new byte[1000];
+                DatagramPacket recv = new DatagramPacket(buf, buf.length);
 
-            byte b;
-            byte[] bytes = recv.getData();
-            String[] data = new String[2];
-            int j = 0;
-            for (int i = 0; (b = bytes[i]) != 0 && i < buf.length; i++) {
-                if (b == '%') {
-                    j++;
-                } else {
-                    if(data[j] == null)
-                        data[j] = "";
-                    data[j] += (char) b;
+                s.receive(recv);
+                //System.out.println("Recieving");
+                s.leaveGroup(group);
+
+                byte b;
+                byte[] bytes = recv.getData();
+                String[] data = new String[2];
+                int j = 0;
+                for (int i = 0; (b = bytes[i]) != 0 && i < buf.length; i++) {
+                    if (b == '%') {
+                        j++;
+                    } else {
+                        if (data[j] == null)
+                            data[j] = "";
+                        data[j] += (char) b;
+                    }
                 }
+
+                hashVal = hash(data[1]);
+
+                System.out.println("ip: " + data[0] + " name: " + data[1]+" hash: " + hashVal);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                isRunning = false;
             }
-
-            System.out.println("ip: " + data[0] + " name: " + data[1]);
-
-            s.leaveGroup(group);
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
 
+    public void stop() {
+        System.out.println("thread stopped");
+        isRunning = false;
     }
 
     private int hash(String input) {

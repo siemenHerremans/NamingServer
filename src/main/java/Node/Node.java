@@ -41,7 +41,6 @@ public class Node {
 
     private boolean sendMsg(String msg) {
         try {
-            //String msg = "testMsg";
             // join multicast group
             InetAddress group = null;
             group = InetAddress.getByName(groupAddress);
