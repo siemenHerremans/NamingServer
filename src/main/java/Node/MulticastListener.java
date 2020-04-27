@@ -40,17 +40,12 @@ public class MulticastListener implements Runnable {
 
                 byte b;
                 byte[] bytes = recv.getData();
-                String[] data = new String[2];
-                int j = 0;
+                String input = "";
                 for (int i = 0; (b = bytes[i]) != 0 && i < buf.length; i++) {
-                    if (b == '%') {
-                        j++;
-                    } else {
-                        if (data[j] == null)
-                            data[j] = "";
-                        data[j] += (char) b;
-                    }
+                    input += (char) b;
                 }
+
+                String[] data = input.split("%");
 
                 hashVal = hash(data[1]);
 

@@ -39,6 +39,10 @@ public class Node {
         sendMsg(getHost());
     }
 
+    public void process(int Hash){
+
+    }
+
     private boolean sendMsg(String msg) {
         try {
             // join multicast group
