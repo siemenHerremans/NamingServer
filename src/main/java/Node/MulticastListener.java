@@ -1,18 +1,14 @@
 package Node;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class MulticastListener implements Runnable {
 
     private String groupAddress;
     private int port;
-    private int hashVal = 0;
     private boolean isRunning = true;
     private Node currentNode;
 
@@ -47,9 +43,10 @@ public class MulticastListener implements Runnable {
 
                 String[] data = input.split("%");
 
-                hashVal = hash(data[1]);
 
-                System.out.println("ip: " + data[0] + " name: " + data[1]+" hash: " + hashVal);
+                currentNode.process(data[1], data[2]);
+
+                System.out.println("ip: " + data[0] + " name: " + data[1]);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -61,18 +58,5 @@ public class MulticastListener implements Runnable {
     public void stop() {
         System.out.println("thread stopped");
         isRunning = false;
-    }
-
-    private int hash(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            byte[] messageDigest = md.digest(input.getBytes());
-            BigInteger no = new BigInteger(1, messageDigest);
-
-            int temp = 32768;
-            return no.mod(BigInteger.valueOf(temp)).intValue();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
