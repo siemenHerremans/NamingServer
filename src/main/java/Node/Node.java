@@ -113,12 +113,12 @@ public class Node {
         System.out.println("sending shut message");
     }
 
-    private boolean sendUni(String msg, String ip, int port) {
+    private boolean sendUni(String msg, String ip, int sendPort) {
         try {
             DatagramSocket ds = new DatagramSocket();
 
             InetAddress ipDest = InetAddress.getByName(ip);
-            DatagramPacket dp = new DatagramPacket(msg.getBytes(), msg.length(), ipDest, port);
+            DatagramPacket dp = new DatagramPacket(msg.getBytes(), msg.length(), ipDest, sendPort);
             ds.send(dp);
             ds.close();
             return true;
