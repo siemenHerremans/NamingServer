@@ -63,6 +63,7 @@ public class Node {
 
     public void process(String ip, String name) {
         if (ip != IP) {
+            System.out.println("dit is de boosdoener "+ name);
             if (calcIDs(name))
                 sendUni(this.name, ip);
 
