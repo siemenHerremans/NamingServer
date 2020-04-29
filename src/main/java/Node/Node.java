@@ -49,6 +49,7 @@ public class Node {
 
     public void processUni(String msg) {
         char firstChar = msg.charAt(0);
+        System.out.println("charmsg: " + firstChar);
         if (firstChar == '$') {
             int numberOfNodes = Integer.parseInt(msg.substring(1).trim());
 
