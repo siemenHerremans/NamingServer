@@ -72,7 +72,7 @@ public class Node {
             case '~':
                 msg = msg.substring(1).trim();
                 String[] data2 = msg.split("%");
-                System.out.println("1 "+ data2[1] + " 2 " + data2[2]);
+                System.out.println("1 "+ data2[0] + " 2 " + data2[1]);
                 sendUni("&" + nextID , data2[0].trim(), uniport);
                 sendUni("@" + previousID, data2[1].trim(), uniport);
                 System.out.println("sent ips");
