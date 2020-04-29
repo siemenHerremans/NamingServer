@@ -66,6 +66,7 @@ public class NamingServer {
                 ip = NodeMap.get(hashVal);
                 NodeMap.remove(hashVal);
                 sendMsg = "~" + previousIp + "%" + nextIp;
+                System.out.println(sendMsg);
                 break;
         }
         InetAddress ipDest = InetAddress.getByName(ip);
