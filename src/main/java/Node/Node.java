@@ -62,11 +62,12 @@ public class Node {
     }
 
     public void process(String ip, String name) {
+        if (ip != IP) {
+            if (calcIDs(name))
+                sendUni(this.name, ip);
 
-        if (calcIDs(name))
-            sendUni(this.name, ip);
-
-        System.out.println("after multi: nextID " + nextID + " previousID " + previousID);
+            System.out.println("after multi: nextID " + nextID + " previousID " + previousID);
+        }
     }
 
     private boolean calcIDs(String name) {
