@@ -40,6 +40,7 @@ public class NamingServer {
 
     public void addNode(String ip, String name) throws Exception {
         int hashVal = hash(name);
+        System.out.println(hashVal);
         NodeMap.put(hashVal, ip);
         String message = "$" + (NodeMap.size() - 1) + "%" + ipHost;
         udpProcess(message, ip);
