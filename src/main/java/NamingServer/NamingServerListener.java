@@ -28,7 +28,7 @@ public class NamingServerListener implements Runnable {
             while(isRunning) {
                 byte[] buf = new byte[1024];
                 DatagramPacket recv = new DatagramPacket(buf, buf.length);
-
+                
                 s.receive(recv);
 
                 String input = new String(recv.getData());

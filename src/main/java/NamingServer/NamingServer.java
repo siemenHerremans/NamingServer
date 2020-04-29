@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 public class NamingServer {
 
-    private TreeMap<Integer, String> NodeMap = new TreeMap<Integer, String>();
+    private TreeMap<Integer, String> NodeMap;
     private String groupAddress;
     private int port;
     private String ip;
@@ -36,9 +36,9 @@ public class NamingServer {
     }
 
     public void addNode(String name, String ip) throws Exception {
-        int hashVal = hash(name);
-        NodeMap.put(hashVal, ip);
-        udpNumberOfNodes(hashVal);
+        int hash = hash(name);
+        NodeMap.put(hash, ip);
+        udpNumberOfNodes(hash);
     }
 
     public void udpNumberOfNodes(int hash) throws Exception {
