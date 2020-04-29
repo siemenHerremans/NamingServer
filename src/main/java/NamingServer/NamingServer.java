@@ -14,6 +14,7 @@ public class NamingServer {
     private TreeMap<Integer, String> NodeMap = new TreeMap<Integer, String>();
     private String groupAddress;
     private int port;
+    private int portUDP;
     private String ip;
     private String name;
 
@@ -45,7 +46,7 @@ public class NamingServer {
         DatagramSocket ds = new DatagramSocket();
         String str = Integer.toString(NodeMap.size());
         InetAddress ipDest = InetAddress.getByName(NodeMap.get(hash));
-        DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ipDest, port);
+        DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ipDest, portUDP);
         ds.send(dp);
         ds.close();
     }
