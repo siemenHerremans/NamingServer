@@ -52,7 +52,7 @@ public class NamingServer {
         String ip = "";
         switch (firstChar){
             case '$':
-                String[] data = message.split("#");
+                String[] data = message.split("%");
                 ip = data[1].trim();
                 sendMsg = data[0].trim();
                 break;
