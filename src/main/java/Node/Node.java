@@ -66,7 +66,6 @@ public class Node {
 
     public void process(String ip, String name) {
         if (!ip.equals(IP)) {
-            System.out.println("hash berekeining" + name);
             if (calcIDs(name))
                 sendUni("#" + this.name, ip);
 
@@ -76,6 +75,7 @@ public class Node {
 
     private boolean calcIDs(String name) {
         int nodeHash = hash(name);
+        System.out.println("hash berekeining " + name);
         boolean state = false;
 
         if(previousID == nextID && (nextID == currentID || nextID == 0)){
