@@ -44,7 +44,7 @@ public class NamingServer {
 
     public void udpNumberOfNodes(String ip) throws Exception {
         DatagramSocket ds = new DatagramSocket();
-        String str = Integer.toString(NodeMap.size());
+        String str = "" + NodeMap.size();
         InetAddress ipDest = InetAddress.getByName(ip);
         DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ipDest, portUDP);
         ds.send(dp);
