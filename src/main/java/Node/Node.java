@@ -16,6 +16,8 @@ public class Node {
     private String IP;
     private String name;
     private String ipName;
+    private int nameport = 7895;
+    private int uniport = 7890;
 
     private int currentID, nextID = 0, previousID = 0;
 
@@ -70,8 +72,8 @@ public class Node {
             case '~':
                 msg = msg.substring(1).trim();
                 String[] data2 = msg.split("%");
-                sendUni("~" + nextID, data2[0].trim());
-                sendUni("~" + previousID, data2[1].trim());
+                sendUni("~" + nextID, data2[0].trim(), uniport);
+                sendUni("~" + previousID, data2[1].trim(), uniport);
                 System.out.println("sent ips");
                 break;
         }
@@ -81,7 +83,7 @@ public class Node {
     public void process(String ip, String name) {
         if (!ip.equals(IP)) {
             if (calcIDs(name.trim()))
-                sendUni("#" + this.name, ip);
+                sendUni("#" + this.name, ip, uniport);
 
             System.out.println("after multi: nextID " + nextID + " previousID " + previousID);
         }
@@ -107,16 +109,16 @@ public class Node {
 
     public void shut() {
         String msg = "~" + previousID + "%" + nextID + "%" + name;
-        sendUni(msg, ipName);
+        sendUni(msg, ipName, nameport);
         System.out.println("sending shut message");
     }
 
-    private boolean sendUni(String msg, String ip) {
+    private boolean sendUni(String msg, String ip, int port) {
         try {
             DatagramSocket ds = new DatagramSocket();
 
             InetAddress ipDest = InetAddress.getByName(ip);
-            DatagramPacket dp = new DatagramPacket(msg.getBytes(), msg.length(), ipDest, 7890);
+            DatagramPacket dp = new DatagramPacket(msg.getBytes(), msg.length(), ipDest, port);
             ds.send(dp);
             ds.close();
             return true;
