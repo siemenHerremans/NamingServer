@@ -12,7 +12,7 @@ public class Main {
 
         NamingServerListener listener = new NamingServerListener(address, port, namingserver);
         new Thread(listener).start();
-        UDPListenerServer udpListener = new UDPListenerServer(7890, namingserver);
+        UDPListenerServer udpListener = new UDPListenerServer(7895, namingserver);
         new Thread(udpListener).start();
     }
 }

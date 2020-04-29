@@ -41,7 +41,7 @@ public class NamingServer {
     public void addNode(String ip, String name) throws Exception {
         int hashVal = hash(name);
         NodeMap.put(hashVal, ip);
-        String message = "$" + (NodeMap.size() - 1) + "%" + ipHost;// + "#" + ip;
+        String message = "$" + (NodeMap.size() - 1) + "%" + ipHost;
         udpProcess(message, ip);
     }
 
@@ -49,21 +49,21 @@ public class NamingServer {
         DatagramSocket ds = new DatagramSocket();
         char firstChar = message.charAt(0);
         String sendMsg = "";
-//        String ip = "";
         switch (firstChar){
             case '$':
                 //String[] data = message.split("#");
                 //ip = data[1].trim();
                 //sendMsg = data[0].trim();
+                sendMsg = message;
                 break;
             case '~':
                 String msg = message.substring(1);
                 String[] data2 = msg.split("%");
                 String previousIp = NodeMap.get(Integer.parseInt(data2[0].trim()));
                 String nextIp = NodeMap.get(Integer.parseInt(data2[1].trim()));
-                System.out.println("prev "+previousIp+" next "+nextIp);
-                ip = NodeMap.get(Integer.parseInt(data2[2].trim()));
-                NodeMap.remove(Integer.parseInt(data2[2].trim()));
+                int hashVal = hash(data2[2].trim());
+                ip = NodeMap.get(hashVal);
+                NodeMap.remove(hashVal);
                 sendMsg = "~" + previousIp + "%" + nextIp;
                 break;
         }
