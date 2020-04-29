@@ -57,6 +57,7 @@ public class Node {
                 String[] data = msg.split("%");
                 int numberOfNodes = Integer.parseInt(data[0].trim());
                 ipName = data[1];
+                System.out.println("Namingserver ip: " + ipName);
                 if (numberOfNodes < 1) {
                     nextID = currentID;
                     previousID = currentID;
