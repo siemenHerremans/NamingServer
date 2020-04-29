@@ -44,6 +44,7 @@ public class NamingServer {
     }
 
     public void udpNumberOfNodes(String ip) throws Exception {
+        System.out.println("ip: " + ip);
         DatagramSocket ds = new DatagramSocket();
         String str = Integer.toString(NodeMap.size());
         InetAddress ipDest = InetAddress.getByName(ip);
