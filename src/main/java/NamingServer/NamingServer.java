@@ -41,7 +41,7 @@ public class NamingServer {
     public void addNode(String ip, String name) throws Exception {
         int hashVal = hash(name);
         NodeMap.put(hashVal, ip);
-        String message = "$" + (NodeMap.size() - 1) + "%" + ipHost;// + "#" + ip;
+        String message = "$" + (NodeMap.size() - 1) + "%" + ipHost;
         udpProcess(message, ip);
     }
 
@@ -49,7 +49,6 @@ public class NamingServer {
         DatagramSocket ds = new DatagramSocket();
         char firstChar = message.charAt(0);
         String sendMsg = "";
-//        String ip = "";
         switch (firstChar){
             case '$':
                 //String[] data = message.split("#");
