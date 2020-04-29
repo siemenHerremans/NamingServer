@@ -27,7 +27,7 @@ public class UDPListenerServer implements Runnable {
 
                 String input = new String(recv.getData());
                 System.out.println("Unicast: " + input);
-                namingserver.udpProcess(input);
+                namingserver.udpProcess(input, "");
             }
             s.close();
         } catch (Exception e) {

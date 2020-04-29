@@ -42,14 +42,14 @@ public class NamingServer {
         int hashVal = hash(name);
         NodeMap.put(hashVal, ip);
         String message = "$" + (NodeMap.size() - 1) + "%" + ipHost + "#" + ip;
-        udpProcess(message);
+        udpProcess(message, ip);
     }
 
-    public void udpProcess(String message) throws Exception {
+    public void udpProcess(String message, String ip) throws Exception {
         DatagramSocket ds = new DatagramSocket();
         char firstChar = message.charAt(0);
         String sendMsg = "";
-        String ip = "";
+//        String ip = "";
         switch (firstChar){
             case '$':
                 String[] data = message.split("%");
