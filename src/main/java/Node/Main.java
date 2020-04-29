@@ -24,8 +24,6 @@ public class Main {
 
             if (scan.equals("stop"))
                 break;
-            else
-                node.testUni(scan);
         }
 
         udpListener.halt();

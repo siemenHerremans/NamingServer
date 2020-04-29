@@ -28,6 +28,7 @@ public class UDPListener implements Runnable {
 
                 String input = new String(recv.getData());
                 System.out.println("Unicast: " + input);
+                currentNode.processUni(input);
             }
             s.close();
         } catch (IOException e) {

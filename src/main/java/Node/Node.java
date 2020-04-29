@@ -47,8 +47,17 @@ public class Node {
         sendMulti(getHost());
     }
 
-    public void testUni(String msg){
-        sendUni(msg, IP);
+    public void processUni(String msg){
+        if (msg.charAt(0) == '$') {
+            int numberOfNodes = Integer.parseInt(msg.split("$")[1]);
+
+            if (numberOfNodes < 1) {
+                nextID = currentID;
+                previousID = currentID;
+            }
+        } else {
+            calcIDs(msg);
+        }
     }
 
     public void process(String ip, String name) {
