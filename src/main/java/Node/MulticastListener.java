@@ -37,7 +37,6 @@ public class MulticastListener implements Runnable {
                 String[] data = input.split("%");
 
 
-
                 System.out.println("ip: " + data[0] + " name: " + data[1]);
                 currentNode.process(data[0], data[1]);
 
