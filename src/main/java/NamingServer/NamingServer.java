@@ -39,12 +39,13 @@ public class NamingServer {
     public void addNode(String ip, String name) throws Exception {
         int hashVal = hash(name);
         NodeMap.put(hashVal, ip);
+        System.out.println("ip: " + ip);
         udpNumberOfNodes(ip);
     }
 
     public void udpNumberOfNodes(String ip) throws Exception {
         DatagramSocket ds = new DatagramSocket();
-        String str = "" + NodeMap.size();
+        String str = Integer.toString(NodeMap.size());
         InetAddress ipDest = InetAddress.getByName(ip);
         DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ipDest, portUDP);
         ds.send(dp);
