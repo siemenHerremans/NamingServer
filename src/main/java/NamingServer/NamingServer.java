@@ -14,7 +14,7 @@ public class NamingServer {
     private TreeMap<Integer, String> NodeMap = new TreeMap<Integer, String>();
     private String groupAddress;
     private int port;
-    private int portUDP;
+    private int portUDP = 7890;
     private String ip;
     private String name;
 
