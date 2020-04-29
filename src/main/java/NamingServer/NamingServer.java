@@ -41,7 +41,7 @@ public class NamingServer {
     public void addNode(String ip, String name) throws Exception {
         int hashVal = hash(name);
         NodeMap.put(hashVal, ip);
-        String message = "$" + (NodeMap.size() - 1) + "%" + ipHost + "#" + ip;
+        String message = "$" + (NodeMap.size() - 1) + "%" + ipHost;// + "#" + ip;
         udpProcess(message, ip);
     }
 
@@ -52,9 +52,9 @@ public class NamingServer {
 //        String ip = "";
         switch (firstChar){
             case '$':
-                String[] data = message.split("#");
-                ip = data[1].trim();
-                sendMsg = data[0].trim();
+                //String[] data = message.split("#");
+                //ip = data[1].trim();
+                //sendMsg = data[0].trim();
                 break;
             case '~':
                 String msg = message.substring(1);
