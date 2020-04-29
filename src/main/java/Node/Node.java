@@ -79,11 +79,11 @@ public class Node {
         int nodeHash = hash(name);
         boolean state = false;
 
-        if ((currentID < nodeHash && nodeHash < nextID) || currentID == nodeHash) {
+        if ((currentID < nodeHash && nodeHash < nextID) || currentID == nextID) {
             System.out.println("teringlijer");
             nextID = nodeHash;
             state = true;
-        } else if ((currentID > nodeHash && nodeHash > previousID) || currentID == nodeHash) {
+        } else if ((currentID > nodeHash && nodeHash > previousID) || currentID == previousID) {
             previousID = nodeHash;
             state = true;
         }
