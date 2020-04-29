@@ -36,7 +36,7 @@ public class NamingServer {
         }
     }
 
-    public void addNode(String name, String ip) throws Exception {
+    public void addNode(String ip, String name) throws Exception {
         int hashVal = hash(name);
         NodeMap.put(hashVal, ip);
         System.out.println("ip: " + ip);
