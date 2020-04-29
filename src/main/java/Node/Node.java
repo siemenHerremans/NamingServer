@@ -56,7 +56,7 @@ public class Node {
                 previousID = currentID;
             }
         }
-        if (msg.charAt(0) == '€') {
+        if (msg.charAt(0) == '#') {
             msg = msg.substring(1).trim();
             System.out.println("hey doe maar mee, ben je groot of ben je klein");
             calcIDs(msg);
@@ -67,7 +67,7 @@ public class Node {
     public void process(String ip, String name) {
         if (!ip.equals(IP)) {
             if (calcIDs(name))
-                sendUni("€" + this.name, ip);
+                sendUni("#" + this.name, ip);
 
             System.out.println("after multi: nextID " + nextID + " previousID " + previousID);
         }
