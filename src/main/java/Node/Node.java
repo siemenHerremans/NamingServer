@@ -49,7 +49,6 @@ public class Node {
 
     public void processUni(String msg) {
         char firstChar = msg.charAt(0);
-        System.out.println("charmsg: " + firstChar);
         if (firstChar == '$') {
             int numberOfNodes = Integer.parseInt(msg.substring(1).trim());
 
@@ -60,7 +59,6 @@ public class Node {
         }
         if (firstChar == '#') {
             msg = msg.substring(1).trim();
-            System.out.println("hey doe maar mee, ben je groot of ben je klein");
             calcIDs(msg);
         }
         System.out.println("after uni: nextID " + nextID + " previousID " + previousID);
@@ -68,6 +66,7 @@ public class Node {
 
     public void process(String ip, String name) {
         if (!ip.equals(IP)) {
+            System.out.println("hash berekeining" + name);
             if (calcIDs(name))
                 sendUni("#" + this.name, ip);
 
