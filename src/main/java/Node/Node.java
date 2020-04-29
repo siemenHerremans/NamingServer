@@ -49,17 +49,19 @@ public class Node {
 
     public void processUni(String msg) {
         char firstChar = msg.charAt(0);
-        if (firstChar == '$') {
-            int numberOfNodes = Integer.parseInt(msg.substring(1).trim());
 
-            if (numberOfNodes < 1) {
-                nextID = currentID;
-                previousID = currentID;
-            }
-        }
-        if (firstChar == '#') {
-            msg = msg.substring(1).trim();
-            calcIDs(msg);
+        switch (firstChar){
+            case '$':
+                int numberOfNodes = Integer.parseInt(msg.substring(1).trim());
+                if (numberOfNodes < 1) {
+                    nextID = currentID;
+                    previousID = currentID;
+                }
+                break;
+            case '#':
+                msg = msg.substring(1).trim();
+                calcIDs(msg);
+                break;
         }
         System.out.println("after uni: nextID " + nextID + " previousID " + previousID);
     }
