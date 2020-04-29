@@ -27,19 +27,18 @@ public class MulticastListener implements Runnable {
                 MulticastSocket s = new MulticastSocket(port);
                 s.joinGroup(group);
 
-                byte[] buf = new byte[1000];
-                DatagramPacket recv = new DatagramPacket(buf, buf.length);
+                while(isRunning) {
+                    byte[] buf = new byte[1000];
+                    DatagramPacket recv = new DatagramPacket(buf, buf.length);
 
-                s.receive(recv);
+                    s.receive(recv);
+
+                    String input = new String(recv.getData());
+                    MulticastHandler handler = new MulticastHandler(input, currentNode);
+                    handler.start();
+                }
                 s.leaveGroup(group);
-
-                String input = new String(recv.getData());
-                String[] data = input.split("%");
-
-
-                System.out.println("ip: " + data[0] + " name: " + data[1]);
-                currentNode.process(data[0], data[1]);
-
+                System.out.println("Multicast thread stopped");
             } catch (IOException e) {
                 e.printStackTrace();
                 isRunning = false;
@@ -48,7 +47,7 @@ public class MulticastListener implements Runnable {
     }
 
     public void stop() {
-        System.out.println("Multicast thread stopped");
+        System.out.println("Multicast thread stopping");
         isRunning = false;
     }
 }
