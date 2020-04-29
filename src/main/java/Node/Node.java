@@ -56,6 +56,9 @@ public class Node {
             if (numberOfNodes < 1) {
                 nextID = currentID;
                 previousID = currentID;
+            } else if( numberOfNodes == 1){
+                nextID = hash(name);
+                previousID = hash(name);
             }
         }
         if (firstChar == '#') {
