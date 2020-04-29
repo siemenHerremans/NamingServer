@@ -48,7 +48,8 @@ public class Node {
     }
 
     public void processUni(String msg) {
-        if (msg.charAt(0) == '$') {
+        char firstChar = msg.charAt(0);
+        if (firstChar == '$') {
             int numberOfNodes = Integer.parseInt(msg.substring(1).trim());
 
             if (numberOfNodes < 1) {
@@ -56,7 +57,7 @@ public class Node {
                 previousID = currentID;
             }
         }
-        if (msg.charAt(0) == '#') {
+        if (firstChar == '#') {
             msg = msg.substring(1).trim();
             System.out.println("hey doe maar mee, ben je groot of ben je klein");
             calcIDs(msg);
