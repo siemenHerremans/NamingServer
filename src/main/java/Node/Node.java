@@ -80,6 +80,7 @@ public class Node {
         boolean state = false;
 
         if ((currentID < nodeHash && nodeHash < nextID) || currentID == nodeHash) {
+            System.out.println("teringlijer");
             nextID = nodeHash;
             state = true;
         } else if ((currentID > nodeHash && nodeHash > previousID) || currentID == nodeHash) {
