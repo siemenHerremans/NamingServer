@@ -15,8 +15,8 @@ public class NamingServer {
     private String groupAddress;
     private int port;
     private int portUDP = 7890;
-    private String ip;
-    private String name;
+    private String ipHost;
+    private String nameHost;
 
     public NamingServer(String address, int port) {
         this.groupAddress = address;
@@ -27,9 +27,9 @@ public class NamingServer {
     public void setHost() {
         try {
             InetAddress host = InetAddress.getLocalHost();
-            ip = host.getHostAddress();
-            name = host.getHostName();
-            System.out.println("ip: "+ ip +"\nName: "+ name);
+            ipHost = host.getHostAddress();
+            nameHost = host.getHostName();
+            System.out.println("ip: "+ ipHost +"\nName: "+ nameHost);
 
         } catch (IOException ex) {
             ex.printStackTrace();
