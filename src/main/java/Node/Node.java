@@ -32,7 +32,7 @@ public class Node {
             name = host.getHostName();
 
             System.out.println("Local information:");
-            System.out.println("Ip: " + IP + "\nName: " + name);
+            System.out.println("Ip: " + IP + "\nName: " + name + "\nHash: " + hash(name));
 
         } catch (IOException ex) {
             ex.printStackTrace();
