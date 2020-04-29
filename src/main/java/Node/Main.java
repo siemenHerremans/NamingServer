@@ -23,6 +23,10 @@ public class Main {
 
             if (scan.equals("stop"))
                 break;
+            if (scan.equals("shut")){
+                System.out.println("shutting");
+                node.shut();
+            }
         }
 
         udpListener.halt();

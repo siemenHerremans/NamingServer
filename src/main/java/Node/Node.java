@@ -71,6 +71,7 @@ public class Node {
                 String[] data2 = msg.split("%");
                 sendUni("~" + nextID, data2[0].trim());
                 sendUni("~" + previousID, data2[1].trim());
+                System.out.println("sent ips");
                 break;
         }
         System.out.println("after uni: nextID " + nextID + " previousID " + previousID);
@@ -104,8 +105,9 @@ public class Node {
     }
 
     public void shut() {
-        String msg = "~" + previousID + "%" + nextID + "%" + IP;
+        String msg = "~" + previousID + "%" + nextID + "%" + name;
         sendUni(msg, ipName);
+        System.out.println("sending shut message");
     }
 
     private boolean sendUni(String msg, String ip) {
