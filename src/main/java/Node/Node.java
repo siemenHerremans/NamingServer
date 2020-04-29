@@ -66,7 +66,7 @@ public class Node {
 
     public void process(String ip, String name) {
         if (!ip.equals(IP)) {
-            if (calcIDs(name))
+            if (calcIDs(name.trim()))
                 sendUni("#" + this.name, ip);
 
             System.out.println("after multi: nextID " + nextID + " previousID " + previousID);
