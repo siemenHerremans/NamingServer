@@ -59,7 +59,7 @@ public class NamingServer {
             case '~':
                 String msg = message.substring(1);
                 String[] data2 = msg.split("%");
-                String previousIp = NodeMap.get(Integer.parseInt(data2[0].trim()));
+                String previousIp = NodeMap.get(5571);
                 String nextIp = NodeMap.get(Integer.parseInt(data2[1].trim()));
                 System.out.println("prev "+ Integer.parseInt(data2[0].trim()) + " next "+ data2[1] + " " + NodeMap.values());
                 int hashVal = hash(data2[2].trim());
