@@ -117,7 +117,7 @@ public class Node {
         try {
             DatagramSocket ds = new DatagramSocket();
 
-            InetAddress ipDest = InetAddress.getByName(ip);
+            InetAddress ipDest = InetAddress.getByName(ip.trim());
             DatagramPacket dp = new DatagramPacket(msg.getBytes(), msg.length(), ipDest, sendPort);
             ds.send(dp);
             ds.close();
