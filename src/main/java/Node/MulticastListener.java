@@ -21,29 +21,30 @@ public class MulticastListener implements Runnable {
     @Override
     public void run() {
         System.out.println("Multicast Listener running");
-        try {
-            InetAddress group = InetAddress.getByName(groupAddress);
-            MulticastSocket s = new MulticastSocket(port);
-            s.joinGroup(group);
+        while(isRunning) {
+            try {
+                InetAddress group = InetAddress.getByName(groupAddress);
+                MulticastSocket s = new MulticastSocket(port);
+                s.joinGroup(group);
 
-            while (isRunning) {
-                byte[] buf = new byte[32768];
+                byte[] buf = new byte[1000];
                 DatagramPacket recv = new DatagramPacket(buf, buf.length);
 
                 s.receive(recv);
+                s.leaveGroup(group);
 
                 String input = new String(recv.getData());
-                MulticastHandler handler = new MulticastHandler(input, currentNode);
-                handler.start();
+                String[] data = input.split("%");
+
+
+                System.out.println("ip: " + data[0] + " name: " + data[1]);
+                currentNode.process(data[0], data[1]);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                isRunning = false;
             }
-            s.leaveGroup(group);
-
-        } catch (
-                IOException e) {
-            e.printStackTrace();
-            isRunning = false;
         }
-
     }
 
     public void stop() {
