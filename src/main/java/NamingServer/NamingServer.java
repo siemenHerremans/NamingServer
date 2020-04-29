@@ -1,5 +1,7 @@
 package NamingServer;
 
+import Node.Node;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.DatagramPacket;
@@ -39,14 +41,33 @@ public class NamingServer {
     public void addNode(String ip, String name) throws Exception {
         int hashVal = hash(name);
         NodeMap.put(hashVal, ip);
-        udpNumberOfNodes(ip);
+        String message = "$" + (NodeMap.size() - 1) + "%" + ipHost + "#" + ip;
+        udpProcess(message);
     }
 
-    public void udpNumberOfNodes(String ip) throws Exception {
+    public void udpProcess(String message) throws Exception {
         DatagramSocket ds = new DatagramSocket();
-        String str = "$" + (NodeMap.size() - 1);
+        char firstChar = message.charAt(0);
+        String sendMsg = "";
+        String ip = "";
+        switch (firstChar){
+            case '$':
+                String[] data = message.split("#");
+                ip = data[1].trim();
+                sendMsg = data[0].trim();
+                break;
+            case '~':
+                String msg = message.substring(1);
+                String[] data2 = msg.split("%");
+                String previousIp = NodeMap.get(Integer.parseInt(data2[0].trim()));
+                String nextIp = NodeMap.get(Integer.parseInt(data2[1].trim()));
+                ip = NodeMap.get(Integer.parseInt(data2[2].trim()));
+                NodeMap.remove(Integer.parseInt(data2[2].trim()));
+                sendMsg = "~" + previousIp + "%" + nextIp;
+                break;
+        }
         InetAddress ipDest = InetAddress.getByName(ip);
-        DatagramPacket dp = new DatagramPacket(str.getBytes(), str.length(), ipDest, portUDP);
+        DatagramPacket dp = new DatagramPacket(sendMsg.getBytes(), sendMsg.length(), ipDest, portUDP);
         ds.send(dp);
         ds.close();
     }
