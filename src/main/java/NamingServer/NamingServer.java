@@ -61,7 +61,7 @@ public class NamingServer {
                 String[] data2 = msg.split("%");
                 String previousIp = NodeMap.get(Integer.parseInt(data2[0].trim()));
                 String nextIp = NodeMap.get(Integer.parseInt(data2[1].trim()));
-                System.out.println("prev "+ data2[0] + " next "+ data2[1]);
+                System.out.println("prev "+ Integer.parseInt(data2[0].trim()) + " next "+ data2[1]);
                 int hashVal = hash(data2[2].trim());
                 ip = NodeMap.get(hashVal);
                 NodeMap.remove(hashVal);
