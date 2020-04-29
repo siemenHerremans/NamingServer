@@ -9,7 +9,6 @@ public class NamingServerListener implements Runnable {
 
     private String groupAddress;
     private int port;
-    private int hashVal = 0;
     private boolean isRunning = true;
     private NamingServer namingServer;
 
@@ -21,35 +20,25 @@ public class NamingServerListener implements Runnable {
 
     @Override
     public void run() {
-        while(isRunning) {
-            try {
-                InetAddress group = InetAddress.getByName(groupAddress);
-                MulticastSocket s = new MulticastSocket(port);
-                s.joinGroup(group);
+        try {
+            InetAddress group = InetAddress.getByName(groupAddress);
+            MulticastSocket s = new MulticastSocket(port);
+            s.joinGroup(group);
 
-                byte[] buf = new byte[1000];
+            while(isRunning) {
+                byte[] buf = new byte[1024];
                 DatagramPacket recv = new DatagramPacket(buf, buf.length);
+                String input = new String(recv.getData());
 
                 s.receive(recv);
-                s.leaveGroup(group);
 
-                byte b;
-                byte[] bytes = recv.getData();
-                String input = "";
-                for (int i = 0; (b = bytes[i]) != 0 && i < buf.length; i++) {
-                    input += (char) b;
-                }
-
-                String[] data = input.split("%");
-
-                namingServer.addNode(data[1], data[0]);
-
-                System.out.println("ip: " + data[0] + " name: " + data[1]+" hash: " + hashVal);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                isRunning = false;
+                NamingServerHandler handler = new NamingServerHandler(input, namingServer);
+                handler.start();
             }
+            s.leaveGroup(group);
+        } catch (Exception e) {
+            e.printStackTrace();
+            isRunning = false;
         }
     }
 
@@ -57,5 +46,4 @@ public class NamingServerListener implements Runnable {
         System.out.println("thread stopped");
         isRunning = false;
     }
-
 }
