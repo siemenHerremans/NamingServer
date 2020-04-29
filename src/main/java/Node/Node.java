@@ -56,9 +56,6 @@ public class Node {
             if (numberOfNodes < 1) {
                 nextID = currentID;
                 previousID = currentID;
-            } else if( numberOfNodes == 1){
-                nextID = hash(name);
-                previousID = hash(name);
             }
         }
         if (firstChar == '#') {
@@ -82,10 +79,10 @@ public class Node {
         int nodeHash = hash(name);
         boolean state = false;
 
-        if (currentID < nodeHash && nodeHash < nextID) {
+        if ((currentID < nodeHash && nodeHash < nextID) || currentID == nodeHash) {
             nextID = nodeHash;
             state = true;
-        } else if (currentID > nodeHash && nodeHash > previousID) {
+        } else if ((currentID > nodeHash && nodeHash > previousID) || currentID == nodeHash) {
             previousID = nodeHash;
             state = true;
         }
