@@ -20,24 +20,24 @@ public class UDPListener implements Runnable {
         System.out.println("Unicast Listener running");
         try {
             DatagramSocket s = new DatagramSocket(port);
-            byte[] buf = new byte[32768];
-            DatagramPacket recv = new DatagramPacket(buf, buf.length);
+
             while (isRunning) {
+                byte[] buf = new byte[32768];
+                DatagramPacket recv = new DatagramPacket(buf, buf.length);
                 s.receive(recv);
+
                 String input = new String(recv.getData());
                 System.out.println("Unicast: " + input);
-                buf = new byte[32768];
-                recv = new DatagramPacket(buf, buf.length);
             }
             s.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("stopped");
+        System.out.println("UDP thread stoppped");
     }
 
     public void halt() {
-        System.out.println("UDP thread stopped");
+        System.out.println("UDP thread stoppping");
         isRunning = false;
     }
 }

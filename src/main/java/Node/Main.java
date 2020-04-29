@@ -15,15 +15,15 @@ public class Main {
         new Thread(listener).start();
 
         node.bootstrap();
-//        new Thread(udpListener).start();
+        new Thread(udpListener).start();
 
-        while(true){
+        while (true) {
             String scan = new Scanner(System.in).nextLine();
 
-            if(scan.equals("stop"))
+            if (scan.equals("stop"))
                 break;
-//            else
-//                node.testUni(scan);
+            else
+                node.testUni(scan);
         }
 
         udpListener.halt();

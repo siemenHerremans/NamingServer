@@ -21,13 +21,13 @@ public class MulticastListener implements Runnable {
     @Override
     public void run() {
         System.out.println("Multicast Listener running");
-        while(isRunning) {
+        while (isRunning) {
             try {
                 InetAddress group = InetAddress.getByName(groupAddress);
                 MulticastSocket s = new MulticastSocket(port);
                 s.joinGroup(group);
 
-                while(isRunning) {
+                while (isRunning) {
                     byte[] buf = new byte[1000];
                     DatagramPacket recv = new DatagramPacket(buf, buf.length);
 

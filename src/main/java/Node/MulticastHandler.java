@@ -1,10 +1,10 @@
 package Node;
 
-public class MulticastHandler extends Thread{
+public class MulticastHandler extends Thread {
     private String input;
     private Node currentNode;
 
-    public MulticastHandler(String input, Node node){
+    public MulticastHandler(String input, Node node) {
         this.input = input;
         this.currentNode = node;
     }
