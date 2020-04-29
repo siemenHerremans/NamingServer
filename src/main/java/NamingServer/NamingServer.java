@@ -54,6 +54,7 @@ public class NamingServer {
                 //String[] data = message.split("#");
                 //ip = data[1].trim();
                 //sendMsg = data[0].trim();
+                sendMsg = message;
                 break;
             case '~':
                 String msg = message.substring(1);
