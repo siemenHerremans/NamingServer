@@ -72,9 +72,18 @@ public class Node {
             case '~':
                 msg = msg.substring(1).trim();
                 String[] data2 = msg.split("%");
-                sendUni("~" + nextID, data2[0].trim(), uniport);
-                sendUni("~" + previousID, data2[1].trim(), uniport);
+                System.out.println("1 "+ data2[1] + " 2 " + data2[2]);
+                sendUni("&" + nextID , data2[0].trim(), uniport);
+                sendUni("@" + previousID, data2[1].trim(), uniport);
                 System.out.println("sent ips");
+                break;
+            case '&':
+                msg = msg.substring(1).trim();
+                nextID = Integer.parseInt(msg);
+                break;
+            case '@':
+                msg = msg.substring(1).trim();
+                previousID = Integer.parseInt(msg);
                 break;
         }
         System.out.println("after uni: nextID " + nextID + " previousID " + previousID);
