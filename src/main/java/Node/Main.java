@@ -10,12 +10,14 @@ public class Main {
         int port = 6789;
         Node node = new Node(address, port);
 
-        MulticastListener listener = new MulticastListener(address, port, node);
         UDPListener udpListener = new UDPListener(7890, node);
+        new Thread(udpListener).start();
+        MulticastListener listener = new MulticastListener(address, port, node);
         new Thread(listener).start();
 
-        //node.bootstrap();
-        new Thread(udpListener).start();
+
+        node.bootstrap();
+
 
         while (true) {
             String scan = new Scanner(System.in).nextLine();
