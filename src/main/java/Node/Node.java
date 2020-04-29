@@ -58,6 +58,7 @@ public class Node {
         } else {
             calcIDs(msg);
         }
+        System.out.println("after uni: nextID " + nextID + " previousID " + previousID);
     }
 
     public void process(String ip, String name) {
@@ -65,7 +66,7 @@ public class Node {
         if (calcIDs(name))
             sendUni(this.name, ip);
 
-        System.out.println("nextID " + nextID + " previousID " + previousID);
+        System.out.println("after multi: nextID " + nextID + " previousID " + previousID);
     }
 
     private boolean calcIDs(String name) {
