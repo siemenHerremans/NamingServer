@@ -82,7 +82,7 @@ public class Node {
         if(previousID == nextID && (nextID == currentID || nextID == 0)){
             nextID = nodeHash;
             previousID = nodeHash;
-
+            state = true;
         } else if ((currentID < nodeHash && nodeHash < nextID)) {
             nextID = nodeHash;
             state = true;
