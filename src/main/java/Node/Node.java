@@ -49,7 +49,7 @@ public class Node {
 
     public void processUni(String msg){
         if (msg.charAt(0) == '$') {
-            int numberOfNodes = Integer.parseInt(msg.split("$")[0]);
+            int numberOfNodes = Integer.parseInt(msg.substring(1).trim());
 
             if (numberOfNodes < 1) {
                 nextID = currentID;

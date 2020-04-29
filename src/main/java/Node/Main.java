@@ -18,7 +18,6 @@ public class Main {
 
         node.bootstrap();
 
-
         while (true) {
             String scan = new Scanner(System.in).nextLine();
 
