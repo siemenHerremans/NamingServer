@@ -14,7 +14,7 @@ public class Main {
         UDPListener udpListener = new UDPListener(7890, node);
         new Thread(listener).start();
 
-        node.bootstrap();
+        //node.bootstrap();
         new Thread(udpListener).start();
 
         while (true) {

@@ -25,12 +25,13 @@ public class Node {
         this.currentID = hash(name);
     }
 
-    public void setHost() {
+    private void setHost() {
         try {
             InetAddress host = InetAddress.getLocalHost();
             IP = host.getHostAddress();
             name = host.getHostName();
 
+            System.out.println("Local information:");
             System.out.println("Ip: " + IP + "\nName: " + name);
 
         } catch (IOException ex) {
@@ -38,7 +39,7 @@ public class Node {
         }
     }
 
-    public String getHost() {
+    private String getHost() {
         return IP + "%" + name;
     }
 
