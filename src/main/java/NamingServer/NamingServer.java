@@ -65,6 +65,7 @@ public class NamingServer {
                 int hashVal = hash(data2[2].trim());
                 ip = NodeMap.get(hashVal);
                 NodeMap.remove(hashVal);
+                System.out.println(previousIp);
                 sendMsg = "~" + previousIp + "%" + nextIp;
                 break;
         }
