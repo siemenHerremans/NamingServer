@@ -41,9 +41,4 @@ public class NamingServerListener implements Runnable {
             isRunning = false;
         }
     }
-
-    public void stop() {
-        System.out.println("thread stopped");
-        isRunning = false;
-    }
 }

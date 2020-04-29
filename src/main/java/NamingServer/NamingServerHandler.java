@@ -14,7 +14,7 @@ public class NamingServerHandler extends Thread {
         String[] data = input.split("%");
 
         try {
-            namingServer.addNode(data[1], data[0]);
+            namingServer.addNode(data[0], data[1]);
             System.out.println("ip: " + data[0] + " name: " + data[1]);
 
         } catch (Exception e) {
