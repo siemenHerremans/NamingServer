@@ -15,6 +15,7 @@ public class Node {
     private int port;
     private String IP;
     private String name;
+    private String ipName;
 
     private int currentID, nextID = 0, previousID = 0;
 
@@ -50,9 +51,12 @@ public class Node {
     public void processUni(String msg) {
         char firstChar = msg.charAt(0);
 
-        switch (firstChar){
+        switch (firstChar) {
             case '$':
-                int numberOfNodes = Integer.parseInt(msg.substring(1).trim());
+                msg = msg.substring(1).trim();
+                String[] data = msg.split("%");
+                int numberOfNodes = Integer.parseInt(data[0].trim());
+                ipName = data[1];
                 if (numberOfNodes < 1) {
                     nextID = currentID;
                     previousID = currentID;
@@ -61,6 +65,12 @@ public class Node {
             case '#':
                 msg = msg.substring(1).trim();
                 calcIDs(msg);
+                break;
+            case '~':
+                msg = msg.substring(1).trim();
+                String[] data2 = msg.split("%");
+                sendUni("~" + nextID, data2[0].trim());
+                sendUni("~" + previousID, data2[1].trim());
                 break;
         }
         System.out.println("after uni: nextID " + nextID + " previousID " + previousID);
@@ -77,10 +87,9 @@ public class Node {
 
     private boolean calcIDs(String name) {
         int nodeHash = hash(name);
-        System.out.println("hash berekeining " + name);
         boolean state = false;
 
-        if(previousID == nextID && (nextID == currentID || nextID == 0)){
+        if (previousID == nextID && (nextID == currentID || nextID == 0)) {
             nextID = nodeHash;
             previousID = nodeHash;
             state = true;
@@ -92,6 +101,11 @@ public class Node {
             state = true;
         }
         return state;
+    }
+
+    public void shut() {
+        String msg = "~" + previousID + "%" + nextID + "%" + IP;
+        sendUni(msg, ipName);
     }
 
     private boolean sendUni(String msg, String ip) {
