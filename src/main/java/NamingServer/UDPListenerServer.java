@@ -35,6 +35,10 @@ public class UDPListenerServer implements Runnable {
 
             System.out.println("New connection, total: " + ++connectionAmount);
             runningThreads++;
+
+            //Wait for new connection
+            while (!s.isConnected());
+
             new Thread(
                     new WorkerRunnableUDP(
                             s, connectionAmount, this, namingserver)
