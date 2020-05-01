@@ -25,6 +25,9 @@ public class WorkerRunnableUDP implements Runnable{
         DatagramPacket recv = new DatagramPacket(buf, buf.length);
         try {
             s.receive(recv);
+            s.close();
+            System.out.println("Einde worker runnable");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,8 +40,6 @@ public class WorkerRunnableUDP implements Runnable{
             e.printStackTrace();
         }
 
-        s.close();
-        System.out.println("Einde worker runnable");
     }
 
 
