@@ -36,6 +36,8 @@ public class WorkerRunnableUDP implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        s.close();
     }
 
 
