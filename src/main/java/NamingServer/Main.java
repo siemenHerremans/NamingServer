@@ -12,9 +12,11 @@ public class Main {
 
         NamingServerListener listener = new NamingServerListener(address, port, namingserver);
         Thread listenerThread = new Thread(listener);
+        listenerThread.start();
         UDPListenerServer udpListener = new UDPListenerServer(7895, namingserver);
         Thread udpThread = new Thread(udpListener);
-
+        udpThread.start();
+        
         try {
             listenerThread.join();
             udpThread.join();
