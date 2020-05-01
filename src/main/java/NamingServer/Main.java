@@ -11,8 +11,14 @@ public class Main {
         NamingServer namingserver = new NamingServer(address, port);
 
         NamingServerListener listener = new NamingServerListener(address, port, namingserver);
-        new Thread(listener).start();
+        Thread listenerThread = new Thread(listener);
         UDPListenerServer udpListener = new UDPListenerServer(7895, namingserver);
-        new Thread(udpListener).start();
+        Thread udpThread = new Thread(udpListener);
+
+        try {
+            listenerThread.join();
+            udpThread.join();
+        }catch (InterruptedException e){e.printStackTrace();}
+
     }
 }
