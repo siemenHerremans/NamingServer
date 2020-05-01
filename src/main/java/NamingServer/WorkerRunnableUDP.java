@@ -38,6 +38,7 @@ public class WorkerRunnableUDP implements Runnable{
         }
 
         s.close();
+        System.out.println("Einde worker runnable");
     }
 
 
