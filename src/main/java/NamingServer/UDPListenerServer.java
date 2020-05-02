@@ -1,13 +1,20 @@
 package NamingServer;
 
-import java.net.DatagramPacket;
+import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.ServerSocket;
 
 public class UDPListenerServer implements Runnable {
 
     private int port;
     private boolean isRunning = true;
     private NamingServer namingserver;
+
+    private Thread runningThread = null;
+    private int connectionAmount = 0;
+    public int runningThreads = 0;
+
+    private DatagramSocket s = null;
 
     public UDPListenerServer(int port, NamingServer namingserver) {
         this.port = port;
@@ -16,7 +23,13 @@ public class UDPListenerServer implements Runnable {
 
     @Override
     public void run() {
+
+        synchronized (this) {
+            this.runningThread = Thread.currentThread();
+        }
+
         System.out.println("Unicast Listener running");
+
         openSocket();
         while (this.isRunning()) {
 
@@ -33,27 +46,24 @@ public class UDPListenerServer implements Runnable {
                             s, connectionAmount, this, namingserver)
             ).start();
 
-        try {
-            DatagramSocket s = new DatagramSocket(port);
-
-            while (isRunning) {
-                byte[] buf = new byte[32768];
-                DatagramPacket recv = new DatagramPacket(buf, buf.length);
-                s.receive(recv);
-
-                String input = new String(recv.getData());
-                System.out.println("Unicast: " + input);
-                namingserver.udpProcess(input, "");
-            }
-            s.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         System.out.println("UDP thread stoppped");
     }
 
-    public void halt() {
-        System.out.println("UDP thread stoppping");
-        isRunning = false;
+    private synchronized boolean isRunning() {
+        return this.isRunning;
+    }
+
+    public synchronized void stop() {
+        this.isRunning = false;
+        this.s.close();
+    }
+
+    private void openSocket() {
+        try {
+            this.s = new DatagramSocket(this.port);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot open port " + this.port, e);
+        }
     }
 }
