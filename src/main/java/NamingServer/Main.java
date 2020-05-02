@@ -16,7 +16,7 @@ public class Main {
         UDPListenerServer udpListener = new UDPListenerServer(7895, namingserver);
         Thread udpThread = new Thread(udpListener);
         udpThread.start();
-
+        
         try {
             listenerThread.join();
             udpThread.join();
